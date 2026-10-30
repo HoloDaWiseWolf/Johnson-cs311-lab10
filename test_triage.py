@@ -1,4 +1,11 @@
 """
+name: persephone 
+class: cs311
+professor: pinto
+date: 10/30/26
+assignment:lab 10
+"""
+"""
 Lab 10: The Priority Triage -- starter + verification (single file).
 
 Complete insert, _sift_up, _sift_down, and extract_min below. Do not
@@ -28,7 +35,9 @@ class MinHeap:
     def insert(self, value: float) -> None:
         """Append `value`, then call _sift_up to restore the heap property."""
         # TODO
-        raise NotImplementedError
+        self._data.append(value)
+        self._sift_up(len(self._data)-1)
+        #raise NotImplementedError
 
     def _sift_up(self, index: int) -> None:
         """
@@ -36,7 +45,17 @@ class MinHeap:
         correct resting position. Do not use a while loop.
         """
         # TODO
-        raise NotImplementedError
+        if index == 0:
+            return
+        parent = (index - 1) // 2
+        parent_value = self._data[parent]
+        child_value = self._data[index]
+        if parent_value <= child_value:
+            return 
+        self._data[parent] = child_value
+        self._data[index] = parent_value
+        self._sift_up(parent)
+        #raise NotImplementedError
 
     def _sift_down(self, index: int) -> None:
         """
@@ -44,7 +63,17 @@ class MinHeap:
         correct resting position. Do not use a while loop.
         """
         # TODO
-        raise NotImplementedError
+        left_child = 2 * index + 1
+        right_child = 2 * index + 2
+        smallest = index
+        if left_child < len(self._data) and self._data[left_child] < self._data[smallest]:
+            smallest = left_child
+        if right_child < len(self._data) and self._data[right_child] < self._data[smallest]:
+            smallest = right_child
+        if smallest != index:
+            self._data[index], self._data[smallest] = self._data[smallest], self._data[index]
+            self._sift_down(smallest)
+        #raise NotImplementedError
 
     def extract_min(self) -> float:
         """
@@ -53,7 +82,16 @@ class MinHeap:
         Correctly handle a heap with 0 or 1 elements.
         """
         # TODO
-        raise NotImplementedError
+        _len = len(self._data)
+        if _len == 0:
+            raise ValueError()
+        if _len == 1:
+            return self._data.pop()
+        old_root = self._data[0]
+        self._data[0] = self._data.pop()
+        self._sift_down(0)
+        return old_root
+        #raise NotImplementedError
 
 
 # ============================== VERIFICATION SUITE ==============================
